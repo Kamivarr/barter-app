@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Item {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  category    String
+  dailyPrice  Float     // Cena za dobę w PLN
+  ownerName   String
+  neighborLoc String    // Np. "Osiedle Projektant, 250m stąd"
+  address     String    // Dokładny adres (ukryty do czasu płatności w Kroku 02)
+  imageUrl    String
+  rating      Float     @default(5.0)
+  bookings    Booking[]
+  createdAt   DateTime  @default(now())
+}
+
+model Booking {
+  id               String   @id @default(cuid())
+  itemId           String
+  item             Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  renterName       String
+  days             Int
+  ownerAmount      Float    // Zysk dla właściciela (np. 85%)
+  commissionAmount Float    // Prowizja serwisu Barter (np. 15%)
+  totalPaid        Float    // Suma opłacona przez wypożyczającego
+  status           String   @default("PAID") // PAID -> PICKED_UP -> COMPLETED
+  pickupPin        String   // 4-cyfrowy kod odbioru (Krok 03)
+  createdAt        DateTime @default(now())
+}
