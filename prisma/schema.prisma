@@ -4,34 +4,106 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite nie obsługuje natywnych enum — wartości przechowywane jako String,
+// typy TypeScript ToolCondition i RentalStatus zdefiniowano w types/domain.ts
+
+model User {
+  id              String          @id @default(cuid())
+  email           String          @unique
+  name            String
+  passwordHash    String
+  avatarUrl       String?
+  phone           String?
+  city            String          @default("Rzeszów")
+  neighborhood    String?
+  exactAddress    String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  items           Item[]          @relation("OwnerItems")
+  rentalRequests  RentalRequest[] @relation("RenterRequests")
+  reviewsGiven    Review[]        @relation("ReviewsGiven")
+  reviewsReceived Review[]        @relation("ReviewsReceived")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  icon  String
+  items Item[]
 }
 
 model Item {
-  id          String    @id @default(cuid())
-  title       String
-  description String
-  category    String
-  dailyPrice  Float     // Cena za dobę w PLN
-  ownerName   String
-  neighborLoc String    // Np. "Osiedle Projektant, 250m stąd"
-  address     String    // Dokładny adres (ukryty do czasu płatności w Kroku 02)
-  imageUrl    String
-  rating      Float     @default(5.0)
-  bookings    Booking[]
-  createdAt   DateTime  @default(now())
+  id             String          @id @default(cuid())
+  title          String
+  description    String
+  dailyPrice     Float
+  depositAmount  Float           @default(0)
+  /// Wartości: NEW | GOOD | FAIR | WELL_USED
+  condition      String          @default("GOOD")
+  rentalRules    String?
+  neighborLoc    String
+  latitude       Float?
+  longitude      Float?
+  /// Tablica URL zapisana jako JSON string (np. ["https://...","https://..."])
+  imagesJson     String
+  isAvailable    Boolean         @default(true)
+  ownerId        String
+  owner          User            @relation("OwnerItems", fields: [ownerId], references: [id], onDelete: Cascade)
+  categoryId     String
+  category       Category        @relation(fields: [categoryId], references: [id])
+  rentalRequests RentalRequest[]
+  reviews        Review[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([categoryId, isAvailable])
+  @@index([ownerId])
+  @@index([dailyPrice])
 }
 
-model Booking {
-  id               String   @id @default(cuid())
+model RentalRequest {
+  id               String    @id @default(cuid())
   itemId           String
-  item             Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  renterName       String
+  item             Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  renterId         String
+  renter           User      @relation("RenterRequests", fields: [renterId], references: [id], onDelete: Cascade)
+  startDate        DateTime
+  endDate          DateTime
   days             Int
-  ownerAmount      Float    // Zysk dla właściciela (np. 85%)
-  commissionAmount Float    // Prowizja serwisu Barter (np. 15%)
-  totalPaid        Float    // Suma opłacona przez wypożyczającego
-  status           String   @default("PAID") // PAID -> PICKED_UP -> COMPLETED
-  pickupPin        String   // 4-cyfrowy kod odbioru (Krok 03)
-  createdAt        DateTime @default(now())
+  ownerAmount      Float
+  commissionAmount Float
+  depositAmount    Float
+  totalPaid        Float
+  /// Wartości: PENDING | APPROVED | ACTIVE | RETURNED | CANCELLED
+  status           String    @default("PENDING")
+  pickupPin        String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  review           Review?
+
+  @@index([itemId, status, startDate, endDate])
+  @@index([renterId, status])
+}
+
+model Review {
+  id              String        @id @default(cuid())
+  rentalRequestId String        @unique
+  rentalRequest   RentalRequest @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
+  itemId          String
+  item            Item          @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  authorId        String
+  author          User          @relation("ReviewsGiven", fields: [authorId], references: [id])
+  targetUserId    String
+  targetUser      User          @relation("ReviewsReceived", fields: [targetUserId], references: [id])
+  /// Skala 1–5
+  rating          Int
+  comment         String
+  createdAt       DateTime      @default(now())
+
+  @@index([itemId])
+  @@index([targetUserId])
 }
