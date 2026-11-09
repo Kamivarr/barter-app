@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+:root {
+  /* Ciemny motyw industrialny: Barter App */
+  --background: #0c0a09; /* stone-950 - tło bazowe */
+  --foreground: #f5f5f4; /* stone-100 - główny tekst */
+  
+  --card: #1c1917; /* stone-900 - tło kart */
+  --card-foreground: #f5f5f4;
+  
+  --popover: #1c1917;
+  --popover-foreground: #f5f5f4;
+  
+  --primary: #ea580c; /* orange-600 - główny akcent industrialny */
+  --primary-foreground: #ffffff;
+  
+  --secondary: #292524; /* stone-800 */
+  --secondary-foreground: #f5f5f4;
+  
+  --muted: #292524;
+  --muted-foreground: #a8a29e; /* stone-400 */
+  
+  --accent: #ea580c; /* orange-600 */
+  --accent-foreground: #ffffff;
+  
+  --success: #10b981; /* emerald-500 - status sukcesu / ekonomia współdzielenia */
+  --success-foreground: #ffffff;
+  
+  --destructive: #ef4444; /* red-500 */
+  --destructive-foreground: #ffffff;
+  
+  --border: #292524; /* stone-800 */
+  --input: #292524;
+  --ring: #ea580c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar dla ciemnego motywu */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0a09;
+}
+::-webkit-scrollbar-thumb {
+  background: #292524;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #44403c;
+}
