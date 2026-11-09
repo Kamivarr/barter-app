@@ -198,5 +198,5 @@ docker compose config
 
 ## 📜 Licencja i Nota Akademicka
 
-Projekt zrealizowany w ramach pracy inżynierskiej / projektu akademickiego dedykowanego lokalnej gospodarce współdzielenia i platformom P2P.  
+Projekt zrealizowany w ramach projektu akademickiego dedykowanego lokalnej gospodarce współdzielenia i platformom P2P.  
 Kod źródłowy udostępniany na licencji **MIT**.
