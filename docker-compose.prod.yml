@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: barter-app-prod
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    environment:
+      - NODE_ENV=production
+      - PORT=${PORT:-3001}
+      - HOSTNAME=0.0.0.0
+      - DATABASE_URL=file:./dev.db
+      - JWT_SECRET=${JWT_SECRET:-barter_jwt_secret_development_key_min_32_bytes_super_secure_2026!}
+    volumes:
+      # Montowanie katalogu prisma z hosta w celu trwałego przechowywania bazy SQLite (dev.db)
+      - ./prisma:/app/prisma
+    restart: always
+    networks:
+      - barter-network
+
+networks:
+  barter-network:
+    name: barter-network
+    driver: bridge

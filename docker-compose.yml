@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: barter-app
+    ports:
+      - "${PORT:-3001}:${PORT:-3001}"
+    environment:
+      - NODE_ENV=development
+      - PORT=${PORT:-3001}
+      - HOSTNAME=0.0.0.0
+      - WATCHPACK_POLLING=true
+      - DATABASE_URL=file:./dev.db
+      - JWT_SECRET=${JWT_SECRET:-barter_jwt_secret_development_key_min_32_bytes_super_secure_2026!}
+    volumes:
+      # Montowanie kodu źródłowego z hosta do kontenera (Live-Reload / Fast Refresh)
+      - .:/app
+      # Izolacja zależności linuksowych w nazwanym wolumenie Docker (zapobiega konfliktom architektur z hostem)
+      - node_modules:/app/node_modules
+      # Izolacja pamięci podręcznej i artefaktów kompilacji Next.js
+      - next_cache:/app/.next
+    command: sh -c "npx prisma generate && npm run dev -- -H 0.0.0.0"
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - barter-network
+
+networks:
+  barter-network:
+    name: barter-network
+    driver: bridge
+
+volumes:
+  node_modules:
+    name: barter_node_modules
+  next_cache:
+    name: barter_next_cache
