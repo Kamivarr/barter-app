@@ -1,14 +1,12 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
   MapPin,
   Star,
   ShieldCheck,
-  Wrench,
   ArrowLeft,
   Info,
-  Loader2,
 } from 'lucide-react';
 import { getItemById } from '@/lib/queries/items.queries';
 import { getSessionUser } from '@/lib/auth';

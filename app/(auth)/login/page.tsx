@@ -3,12 +3,11 @@
 import React, { useActionState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { LogIn, Handshake, AlertCircle, Sparkles, Loader2, KeyRound } from 'lucide-react';
+import { LogIn, Handshake, AlertCircle, Loader2, KeyRound } from 'lucide-react';
 import { loginAction, AuthActionState } from '@/app/actions/auth.actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 const initialState: AuthActionState = {
   success: false,

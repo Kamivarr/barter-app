@@ -190,3 +190,29 @@ export function computeAverageRating(
   const sum = reviews.reduce((acc, r) => acc + r.rating, 0);
   return Math.round((sum / reviews.length) * 10) / 10;
 }
+
+/**
+ * Przelicza kwoty finansowe wypożyczenia zgodnie z modelem prowizyjnym Barter (15% prowizji serwisowej).
+ */
+export function computeRentalPricing(
+  dailyPrice: number,
+  days: number,
+  depositAmount: number = 0
+): {
+  ownerAmount: number;
+  commissionAmount: number;
+  depositAmount: number;
+  totalPaid: number;
+} {
+  const safeDays = Math.max(1, days);
+  const ownerAmount = Math.round(safeDays * dailyPrice * 100) / 100;
+  const commissionAmount = Math.round(ownerAmount * 0.15 * 100) / 100;
+  const safeDeposit = Math.max(0, depositAmount);
+  const totalPaid = Math.round((ownerAmount + commissionAmount + safeDeposit) * 100) / 100;
+  return {
+    ownerAmount,
+    commissionAmount,
+    depositAmount: safeDeposit,
+    totalPaid,
+  };
+}

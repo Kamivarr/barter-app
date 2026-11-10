@@ -1,25 +1,19 @@
 import React, { Suspense } from 'react';
 import Link from 'next/link';
 import {
-  Wrench,
   Search,
   PlusCircle,
-  ShieldCheck,
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
   KeyRound,
   CreditCard,
-  MapPin,
-  Loader2,
 } from 'lucide-react';
-import { getCatalogItems, getCategories, CatalogFilters } from '@/lib/queries/items.queries';
+import { getCatalogItems, getCategories } from '@/lib/queries/items.queries';
 import { ItemCard } from '@/components/items/item-card';
 import { ItemFilters } from '@/components/items/item-filters';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import type { ToolCondition } from '@/types/domain';
 
 interface PageProps {

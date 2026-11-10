@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Star, AlertCircle, CheckCircle2, MessageSquare } from 'lucide-react';
+import { Star, AlertCircle } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { createReviewAction } from '@/app/actions/rental.actions';

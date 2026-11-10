@@ -1,5 +1,5 @@
 import React from 'react';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Edit3, ShieldAlert } from 'lucide-react';
 import { prisma } from '@/lib/prisma';

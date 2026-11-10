@@ -3,7 +3,7 @@
 import React, { useActionState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { UserPlus, Handshake, AlertCircle, Loader2, MapPin, ShieldCheck } from 'lucide-react';
+import { UserPlus, Handshake, AlertCircle, Loader2, ShieldCheck } from 'lucide-react';
 import { registerAction, AuthActionState } from '@/app/actions/auth.actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

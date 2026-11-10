@@ -115,6 +115,8 @@ barter-app/
 │   ├── schema.prisma            # Schemat domeny Prisma (User, Category, Item, itp.)
 │   └── seed.ts                  # Samodzielny skrypt seedujący początkowe dane
 ├── public/                      # Zasoby statyczne aplikacji
+├── tests/
+│   └── domain.test.mjs          # Zestaw testów jednostkowych dla reguł domenowych (node --test)
 ├── types/
 │   ├── domain.ts                # Typy TypeScript, interfejsy DTO oraz czyste funkcje pomocnicze
 │   ├── global.d.ts              # Globalne deklaracje środowiskowe dla edytora hosta
@@ -129,6 +131,7 @@ barter-app/
 ├── docker-compose.prod.yml      # Konfiguracja produkcyjna Docker Compose (standalone)
 ├── Dockerfile                   # Wielostopniowy produkcyjny obraz Docker (base, deps, builder, production)
 ├── Dockerfile.dev               # Dedykowany obraz deweloperski z warstwowym cache npm i Prisma
+├── GOOGLE_SLIDES_PROMPT.md      # Gotowy prompt dla Google Slides / Gemini do wygenerowania prezentacji obronnej
 ├── next.config.ts               # Konfiguracja Next.js (output standalone, images)
 ├── package.json                 # Zależności npm i skrypty uruchomieniowe (docker:up, docker:build, docker:prisma)
 ├── Project_context.md           # Ten plik – kompendium wiedzy o projekcie

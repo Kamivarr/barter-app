@@ -4,6 +4,30 @@ Rejestr zmian architektonicznych, konfiguracyjnych i infrastrukturalnych prowadz
 
 ---
 
+## [2026-11-10] - Finalizacja projektu: Wdrożenie Quick Wins, Testów Jednostkowych i Promptu Prezentacji
+- **Wzbogacenie i profesjonalizacja `README.md` (Pitch Deck & Engineering Spec):**
+  - Dodano oficjalne badges (Next.js 16, React 19, Tailwind v4, Prisma, TypeScript, Docker, 100% Strict Type-Safe).
+  - Wprowadzono sekcję wizytówki zespołu i podziału ról (**Agata Mróz – Product Manager**, **Kamil Śliwa – Intern / Lead Full-Stack Dev**).
+  - Dodano diagram Mermaid procesu w 3 krokach (Wystawienie ➔ Płatność z prowizją 15% ➔ Bezpieczny odbiór z PIN).
+  - Dodano 3-letnią tabelę projekcji finansowej (GMV, przychody 15%, zysk netto) z wyliczonymi wskaźnikami: **1330% 3-letni ROI**, **+182 400 PLN NPV (r = 10%)** oraz próg rentowności **BEP 48 wypożyczeń / miesiąc**.
+  - Zestawiono tabelę twardych metryk inżynierskich (5 modeli Prisma, 8 kategorii, 111 ofert, 13 Server Actions, 18 komponentów UI, 7 ekranów, 3 chronione grupy tras).
+  - Opublikowano tabelę kont testowych dla szybkiej ewaluacji demo (hasło: `haslo1234`).
+- **Eliminacja błędów i optymalizacja lintera ESLint (`eslint.config.mjs`, `components/ui/card.tsx`):**
+  - Dodano `types/*.d.ts` oraz `types/**/*.d.ts` do `globalIgnores` w `eslint.config.mjs`, eliminując fałszywe błędy z plików definicji środowiskowych hosta.
+  - Zastąpiono puste interfejsy w `components/ui/card.tsx` deklaracjami typów `export type CardProps = React.ComponentProps<'div'>;` (zgodność z `@typescript-eslint/no-empty-object-type`).
+  - Wyczyszczono nieużywane importy w plikach stron i komponentów (`page.tsx`, `login/page.tsx`, `register/page.tsx`, `review-modal.tsx`, `owner-requests-list.tsx`).
+  - Wynik polecenia `npm run lint`: **0 błędów**.
+- **Wdrożenie automatycznego zestawu testów jednostkowych (`tests/domain.test.mjs`):**
+  - Dodano czystą funkcję domenową `computeRentalPricing(dailyPrice, days, depositAmount)` w `types/domain.ts` przeliczającą kwoty zgodnie z modelem prowizyjnym 15%.
+  - Oparto zestaw testów o wbudowany natywny runner Node.js (`node --test`, `node:assert/strict`) – zerowe dodatkowe zależności zewnętrzne, natychmiastowe wykonanie w ~100ms.
+  - Pokryto testami kalkulację prowizji 15%, zaokrąglenia i walidację kaucji, wyliczanie średniej ocen `computeAverageRating`, type guardy `isToolCondition`/`isRentalStatus` oraz odporność parsera zdjęć `parseImagesJson`.
+  - Skonfigurowano skrypty uruchomieniowe w `package.json`: `"test"` oraz `"docker:test"`.
+- **Utworzenie pliku `GOOGLE_SLIDES_PROMPT.md`:**
+  - Kompletny, gotowy do skopiowania prompt dla AI generatorów slajdów (Gemini, Plus AI, Gamma, SlidesAI) w industrialnym ciemnym motywie `#0c0a09`.
+  - Wymusza 6-slajdowy Pitch Deck & MVP Showcase z 1-slajdowym Business Model Canvas (9 bloków Osterwaldera), analizą ROI/NPV oraz wyeksponowanym linkiem do repozytorium GitHub.
+
+---
+
 ## [2026-11-09] - Resetowanie ofert i zasilenie bazy 111 realistycznymi przedmiotami (Marketplace Seed Expansion)
 - **Reset danych transakcyjnych i ofert bez destrukcji tabel:**
   - Wdrożono bezpieczne czyszczenie (`prisma.review.deleteMany()`, `prisma.rentalRequest.deleteMany()`, `prisma.item.deleteMany()`) bez naruszania struktury schematu, historii migracji Prisma ani kont użytkowników (`User`).

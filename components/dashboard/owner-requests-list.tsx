@@ -8,17 +8,12 @@ import {
   XCircle,
   Clock,
   Calendar,
-  User,
-  ShieldCheck,
   Star,
   AlertCircle,
   Check,
-  ArrowRight,
-  TrendingUp,
 } from 'lucide-react';
 import { StatusBadge } from '@/components/rentals/status-badge';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import {
